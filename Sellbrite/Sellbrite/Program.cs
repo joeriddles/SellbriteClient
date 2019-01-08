@@ -8,6 +8,7 @@ namespace Sellbrite
 		{
 			SellbriteClient client = new SellbriteClient();
 			client.GetWarehouses();
+			client.PostProduct("TESTSKU");
 		}
 	}
 }
