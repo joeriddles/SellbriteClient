@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sellbrite", "Sellbrite\Sellbrite.csproj", "{343E2474-0DCA-463D-874A-22DE365C731B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sellbrite.Tests", "Sellbrite.Tests\Sellbrite.Tests.csproj", "{F50FA103-742E-4B13-9F7D-77C70815AF65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sellbrite.Tests", "Sellbrite.Tests\Sellbrite.Tests.csproj", "{F50FA103-742E-4B13-9F7D-77C70815AF65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

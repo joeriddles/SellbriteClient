@@ -1,14 +1,26 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Sellbrite.Models;
 
 namespace Sellbrite
 {
-	class Program
+	public class Program
 	{
-		private static void Main(string[] args)
+		private static void Main()
 		{
+			List<string> fileLines = File.ReadAllLines("../../../../SellbriteMasterInventory.csv").Skip(3).ToList();
+			List<Inventory> inventories = Inventory.ParseInventoriesFromList(fileLines);
+
 			SellbriteClient client = new SellbriteClient();
-			client.GetWarehouses();
-			client.PostProduct("TESTSKU");
+			List<Warehouse> warehouses = client.GetWarehouses();
+
+			if (warehouses.Count < 1)
+				return;
+
+			List<SellbriteInventory> sellbriteInventories =
+				SellbriteInventory.ConvertToSellbrite(inventories, warehouses[0].Uuid);
+			client.PutInventories(sellbriteInventories);
 		}
 	}
 }

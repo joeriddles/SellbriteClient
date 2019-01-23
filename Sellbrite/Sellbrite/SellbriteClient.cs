@@ -1,8 +1,11 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using Sellbrite.Models;
+using Newtonsoft.Json;
 
 namespace Sellbrite
 {
@@ -23,22 +26,55 @@ namespace Sellbrite
 			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authByteArray));
 		}
 
-		public HttpStatusCode GetWarehouses()
+		public List<Warehouse> GetWarehouses()
 		{
 			var response = Client.GetAsync("warehouses").Result;
-			Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-			return response.StatusCode;
+			if (response.IsSuccessStatusCode)
+			{
+				List<Warehouse> warehouses = new List<Warehouse>();
+				var responseString = response.Content.ReadAsStringAsync().Result;
+				warehouses.AddRange(JsonConvert.DeserializeObject<List<Warehouse>>(responseString));
+				return warehouses;
+			}
+
+			return null;
 		}
 
-		public HttpStatusCode PostProduct(string sku)
+		public List<SellbriteInventory> GetInventories()
 		{
-			HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"products/{sku}");
-			string contentString = "{\"name\":\"test name\"}";
-			requestMessage.Content = new StringContent(contentString, Encoding.UTF8, "application/json");
-			var response = Client.SendAsync(requestMessage).Result;
-			Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+			var response = Client.GetAsync("inventory").Result;
+			if (response.IsSuccessStatusCode)
+			{
+				List<SellbriteInventory> sellbriteInventories = new List<SellbriteInventory>();
+				var responseString = response.Content.ReadAsStringAsync().Result;
+				sellbriteInventories.AddRange(JsonConvert.DeserializeObject<List<SellbriteInventory>>(responseString));
+				return sellbriteInventories;
+			}
 
-			return response.StatusCode;
+			return null;
+		}
+
+		public void PutInventories(List<SellbriteInventory> inventories)
+		{
+			for (int i = 0; i < inventories.Count; i += 50)
+			{
+				Console.WriteLine($"[{i} to {i + 50})");
+
+				HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Put, $"{Client.BaseAddress}inventory");
+				IEnumerable<SellbriteInventory> fiftyInventories = inventories.Skip(i).Take(50);
+
+				SellbriteInventoryContainer container = new SellbriteInventoryContainer {Inventory = fiftyInventories};
+
+				string contentString = JsonConvert.SerializeObject(container);
+				requestMessage.Content = new StringContent(contentString, Encoding.UTF8, "application/json");
+				var response = Client.SendAsync(requestMessage).Result;
+
+				if (response.IsSuccessStatusCode)
+				{
+					string content = response.Content.ReadAsStringAsync().Result;
+				}
+			}
+
 		}
 	}
 }
