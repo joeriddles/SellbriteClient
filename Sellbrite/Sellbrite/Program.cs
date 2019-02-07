@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using Sellbrite.Models;
 
 namespace Sellbrite
@@ -9,8 +10,10 @@ namespace Sellbrite
 	{
 		private static void Main()
 		{
-			List<string> fileLines = File.ReadAllLines("../../../../SellbriteMasterInventory.csv").Skip(3).ToList();
-			List<Inventory> inventories = Inventory.ParseInventoriesFromList(fileLines);
+			List<string> inventoryFileLines = File.ReadAllLines("../../../../SellbriteMasterInventory.csv").Skip(3).ToList();
+			List<Inventory> inventories = Inventory.ParseInventoriesFromList(inventoryFileLines);
+
+			List<Product> products = Product.ParseProductsFromList("../../../../product_data.json");
 
 			SellbriteClient client = new SellbriteClient();
 			List<Warehouse> warehouses = client.GetWarehouses();
@@ -20,7 +23,11 @@ namespace Sellbrite
 
 			List<SellbriteInventory> sellbriteInventories =
 				SellbriteInventory.ConvertToSellbrite(inventories, warehouses[0].Uuid);
-			client.PutInventories(sellbriteInventories);
+
+			List<SellbriteProduct> sellbriteProducts = SellbriteProduct.ConvertToSellbrite(products);
+
+			client.PostProducts(sellbriteProducts);
+			// client.PutInventories(sellbriteInventories);
 		}
 	}
 }

@@ -74,7 +74,38 @@ namespace Sellbrite
 					string content = response.Content.ReadAsStringAsync().Result;
 				}
 			}
+		}
 
+		public void PostProducts(List<SellbriteProduct> products)
+		{
+			int i = 1;
+			foreach (var product in products)
+			{
+				Console.WriteLine(i + ": " + product.Sku);
+				i++;
+
+				HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"{Client.BaseAddress}products/{product.Sku}");
+				string contentString = JsonConvert.SerializeObject(
+					product,
+					Formatting.None,
+					new JsonSerializerSettings
+					{
+						NullValueHandling = NullValueHandling.Ignore
+					}
+				);
+				requestMessage.Content = new StringContent(contentString, Encoding.UTF8, "application/json");
+				var response = Client.SendAsync(requestMessage).Result;
+
+				if (response.IsSuccessStatusCode)
+				{
+					string content = response.Content.ReadAsStringAsync().Result;
+				}
+				else
+				{
+					Console.WriteLine("error");
+				}
+
+			}
 		}
 	}
 }
