@@ -13,7 +13,7 @@ namespace Sellbrite
 			List<string> inventoryFileLines = File.ReadAllLines("../../../../SellbriteMasterInventory.csv").Skip(3).ToList();
 			List<Inventory> inventories = Inventory.ParseInventoriesFromList(inventoryFileLines);
 
-			List<Product> products = Product.ParseProductsFromList("../../../../product_data.json");
+			List<Product> products = Product.ParseProductsFromList("../../../../products.json");
 
 			SellbriteClient client = new SellbriteClient();
 			List<Warehouse> warehouses = client.GetWarehouses();

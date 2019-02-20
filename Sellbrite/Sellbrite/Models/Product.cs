@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using FileHelpers;
 using Newtonsoft.Json;
 
@@ -22,8 +18,8 @@ namespace Sellbrite.Models
 		public string Brand { get; set; }
 		public string Condition { get; set; }
 		public string Condition_Note { get; set; }
-		public float Price { get; set; }
-		public float Msrp { get; set; }
+		public float? Price { get; set; }
+		public float? Msrp { get; set; }
 		public string Category_Name { get; set; }
 		public string Manufacturer { get; set; }
 		public string Manufacturer_Model_Number { get; set; }
@@ -34,10 +30,10 @@ namespace Sellbrite.Models
 		public string Gcid { get; set; }
 		public string Asin { get; set; }
 		public string Epid { get; set; }
-		public float Package_Height { get; set; }
-		public float Package_Length { get; set; }
-		public float Package_Width { get; set; }
-		public float Package_Weight { get; set; }
+		public float? Package_Height { get; set; }
+		public float? Package_Length { get; set; }
+		public float? Package_Width { get; set; }
+		public float? Package_Weight { get; set; }
 
 		public string Feature_1 { get; set; }
 		public string Feature_2 { get; set; }

@@ -66,7 +66,7 @@ namespace Sellbrite.Models
 			};
 			imageList.RemoveAll(str => str is null || str.Equals(""));
 
-			return new SellbriteProduct()
+			var sellbriteProduct = new SellbriteProduct()
 			{
 				Sku = p.Sku,
 				Name = p.Name,
@@ -76,12 +76,6 @@ namespace Sellbrite.Models
 				Manufacturer = p.Manufacturer,
 				ManufacturerModelNumber = p.Manufacturer_Model_Number,
 				Description = p.Description,
-				Price = p.Price,
-				PackageLength = p.Package_Length,
-				PackageWidth = p.Package_Width,
-				PackageHeight = p.Package_Height,
-				PackageWeight = p.Package_Weight,
-				Msrp = p.Msrp,
 				CategoryName = p.Category_Name,
 				Features = features,
 				ConditionNote = p.Condition_Note,
@@ -102,6 +96,15 @@ namespace Sellbrite.Models
 					Delete = p.Delete
 				}
 			};
+
+			if (p.Price.HasValue) sellbriteProduct.Price = p.Price.Value;
+			if (p.Package_Length.HasValue) sellbriteProduct.PackageLength = p.Package_Length.Value;
+			if (p.Package_Width.HasValue) sellbriteProduct.PackageWidth = p.Package_Width.Value;
+			if (p.Package_Height.HasValue) sellbriteProduct.PackageHeight = p.Package_Height.Value;
+			if (p.Package_Weight.HasValue) sellbriteProduct.PackageWeight = p.Package_Weight.Value;
+			if (p.Msrp.HasValue) sellbriteProduct.Msrp = p.Msrp.Value;
+
+			return sellbriteProduct;
 		}
 
 		public static List<SellbriteProduct> ConvertToSellbrite(List<Product> products)
