@@ -17,24 +17,24 @@ namespace Sellbrite.Models
 		[JsonProperty(PropertyName = "manufacturer_model_number")]
 		public string ManufacturerModelNumber { get; set; }
 		public string Description { get; set; }
-		public float Price { get; set; }
+		public float? Price { get; set; }
 		[JsonIgnore]
-		public float Cost { get; set; }
+		public float? Cost { get; set; }
 		[JsonProperty(PropertyName = "package_length")]
-		public float PackageLength { get; set; }
+		public float? PackageLength { get; set; }
 		[JsonProperty(PropertyName = "package_width")]
-		public float PackageWidth { get; set; }
+		public float? PackageWidth { get; set; }
 		[JsonProperty(PropertyName = "package_height")]
-		public float PackageHeight { get; set; }
+		public float? PackageHeight { get; set; }
 		[JsonProperty(PropertyName = "package_unit_of_length")]
 		[JsonIgnore]
 		public string PackageUnitOfLength { get; set; }
 		[JsonProperty(PropertyName = "package_weight")]
-		public float PackageWeight { get; set; }
+		public float? PackageWeight { get; set; }
 		[JsonProperty(PropertyName = "package_unit_of_weight")]
 		[JsonIgnore]
 		public string PackageUnitOfWeight { get; set; }
-		public float Msrp { get; set; }
+		public float? Msrp { get; set; }
 		[JsonProperty(PropertyName = "category_name")]
 		public string CategoryName { get; set; }
 		public List<string> Features { get; set; }
@@ -49,7 +49,6 @@ namespace Sellbrite.Models
 		public string Epid { get; set; }
 		[JsonProperty(PropertyName = "image_list")]
 		public List<string> ImageList { get; set; }
-		[JsonIgnore]
 		[JsonProperty(PropertyName = "custom_attributes")]
 		public CustomAttributes CustomAttributes { get; set; }
 
@@ -117,17 +116,17 @@ namespace Sellbrite.Models
 
 	public class CustomAttributes
 	{
-		[JsonProperty(PropertyName = "ebay_title")]
+		[JsonProperty(PropertyName = "ebay title")]
 		public string EbayTitle { get; set; }
-		[JsonProperty(PropertyName = "fourth_category")]
+		[JsonProperty(PropertyName = "fourth category")]
 		public string FourthCategory { get; set; }
-		[JsonProperty(PropertyName = "item_description")]
+		[JsonProperty(PropertyName = "item description")]
 		public string ItemDescription { get; set; }
 		[JsonProperty(PropertyName = "model")]
 		public string Model { get; set; }
-		[JsonProperty(PropertyName = "second_category")]
+		[JsonProperty(PropertyName = "second category")]
 		public string SecondCategory { get; set; }
-		[JsonProperty(PropertyName = "third_category")]
+		[JsonProperty(PropertyName = "third category")]
 		public string ThirdCategory { get; set; }
 		[JsonProperty(PropertyName = "delete")]
 		public string Delete { get; set; }
